@@ -16,32 +16,23 @@ public class Server {
         try
         {
             ss = new ServerSocket(port,50,InetAddress.getByName("0.0.0.0"));
-            System.out.println("Server started");
-
+            System.out.println("Server started ");
             System.out.println("Waiting for a client ...");
 
+            while (true) {
             s = ss.accept();
             System.out.println("Client accepted");
 
            Thread r = new requestThread(s);
             r.start();
-            r.join();
+            }
 
         }
         catch(IOException e)
         {
             System.out.println(e);
         }
-        catch(InterruptedException e){
-            System.err.println();
-        } finally{
-            try {
-                s.close();
-                System.out.println("Closing connection");
-            } catch (Exception e) {
-                System.err.println(e);
-            }
-        }
+        
     }
 
     public static void main(String args[])
@@ -85,6 +76,13 @@ class requestThread extends Thread{
             } 
         } catch (Exception e) {
             System.err.println(e);
+        }finally{
+            try {
+                s.close();
+                System.out.println("Closing connection");
+            } catch (Exception e) {
+                System.err.println(e);
+            }
         }
 
     }
